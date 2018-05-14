@@ -1,0 +1,15 @@
+﻿@model NetShop_cw_47.Models.Phone
+@functions {
+    public string url { get; set; }
+    }
+
+@{
+    ViewData["Title"] = "Характеристики";
+}
+
+<h2>Характеристики</h2>
+<p>
+    @ViewBag.Features
+</p>
+@*<a href="@ViewBag.Url">Перейти на сайт производителя</a>*@
+@Html.ActionLink("Сайт производителя", "Manufacturer", new { url = ViewBag.Url })

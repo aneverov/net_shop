@@ -1,0 +1,79 @@
+﻿@model IEnumerable<NetShop_cw_47.Models.Phone>
+
+@{
+    ViewData["Title"] = "Телефоны";
+}
+
+<h2>Телефоны</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-action="Search">
+    <div class="row">
+        <div class="col-sm-3">
+            <label name>Название лейбла</label>
+            <input name="qwery" class="form-control" />
+            <label from>Цена от</label>
+            <input name="priceFrom" class="form-control" />
+            <label to>Цена до</label>
+            <input name="priceTo" class="form-control" />
+        </div>
+        <input type="submit" value="Search" class="btn btn-default" />
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Производитель
+            </th>
+            <th>
+                <a asp-action="Sort" asp-controller="Phone" asp-route-sortMethod="name">Модель</a>
+            </th>
+            <th>
+                <a asp-action="Sort" asp-controller="Phone" asp-route-sortMethod="price">Цена</a>
+               
+            </th>
+            <th>
+                Характеристики
+            </th>
+            <th>
+                Количество
+            </th>
+            <th>
+                Количество Заказов
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Характеристики", "Features", new { id = item.id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantityOrders)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { id=item.id }) |
+                @Html.ActionLink("Характеристики", "Features", new { id = item.id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id=item.id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

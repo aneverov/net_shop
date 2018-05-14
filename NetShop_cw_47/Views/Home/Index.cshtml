@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Phone>
+@{
+    ViewData["Title"] = "Каталог товаров";
+}
+<h3>Смартфоны</h3>
+<table class="table-condensed">
+    <tr>
+        <td>Модель</td>
+        <td>Производитель</td>
+        <td>Цена</td>
+        <td>Характеристики</td>
+        <td></td>
+    </tr>
+    @foreach (var phone in Model)
+    {
+    <tr>
+        <td>@phone.Name</td>
+        <td>@phone.Company</td>
+        <td>@phone.Price</td>
+        <td>
+            <div class="btn-group-justified">
+                @Html.ActionLink("Характеристики", "Features", new { id = phone.id }) |
+                @Html.ActionLink("Скачать", "Download", new { id = phone.id }) 
+            </div>
+        </td>
+        <td><a href="~/Home/Buy/@phone.id">Купить</a></td>
+    </tr>
+    }
+</table>

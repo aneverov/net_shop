@@ -7,19 +7,29 @@ public string url { get; set; }
     ViewData["Title"] = "Характеристики";
 }
 
-<h2>Характеристики</h2>
+<h2>Характеристики @Model.Name</h2>
+<br />
+<br />
 <p>
-    @ViewBag.Features
+    <ul>
+        <li>@ViewBag.Features</li>
+        <li> Цена @Model.Price</li>
+
+    </ul>
+
 </p>
+<br />
+<br />
 @*Код рабочий*@
-<table class="table-condensed">
+<table class="table-condensed" >
     <tr>
-        <td>Стоимость телефона</td>
+        <td><b>Стоимость телефона</b></td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
-    <tr>@{
+    <tr>
+        @{
             double[] a = ViewBag.currR;
             string[] b = ViewBag.currC;
             int i = 0;
@@ -32,5 +42,7 @@ public string url { get; set; }
         }
     </tr>
 </table>
+<br />
+<br />
 
 @Html.ActionLink("Сайт производителя", "Manufacturer", new { url = ViewBag.Url })

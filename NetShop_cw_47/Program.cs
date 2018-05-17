@@ -10,11 +10,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NetShop_cw_47.Models;
+using Newtonsoft.Json;
 
 namespace NetShop_cw_47
 {
     public class Program
     {
+        //static Currencies[] currencies { get; set; }
         public static void Main(string[] args)
         {
             var webHost = BuildWebHost(args);
@@ -39,17 +41,13 @@ namespace NetShop_cw_47
                 new Currencies (){CurrencyCode = "KGS", CurrencyName = "Сом", CurrencyRate = 68},
                 new Currencies (){CurrencyCode = "EUR", CurrencyName = "Евро", CurrencyRate = 0.83}
             };
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(Currencies[]));
 
-            using (FileStream fs = new FileStream("wwwroot/Currencies.json", FileMode.OpenOrCreate))
-            {
-                jsonFormatter.WriteObject(fs, currencies);
-            }
+            File.WriteAllText("wwwroot/Currencies.json", JsonConvert.SerializeObject(currencies));
+            //DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(Currencies[]));
+
             //using (FileStream fs = new FileStream("wwwroot/Currencies.json", FileMode.OpenOrCreate))
             //{
-            //    Currencies[] newcurr = (Currencies[])jsonFormatter.ReadObject(fs);
-
-                
+            //    jsonFormatter.WriteObject(fs, currencies);
             //}
 
             webHost.Run();

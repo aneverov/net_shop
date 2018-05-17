@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace NetShop_cw_47.Controllers
         private MobileContext dbContext;
         private readonly IHostingEnvironment appEnvironment;
         //private NotFoundResult NotFoundResult = new NotFoundResult();
+        public DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(Currencies[]));
 
         public HomeController(MobileContext dbContext, IHostingEnvironment appEnvironment)
         {
@@ -52,9 +54,27 @@ namespace NetShop_cw_47.Controllers
         public IActionResult Features(int id)
         {
             Phone phone = dbContext.Phones.Find(id);
+
+            using (FileStream fs = new FileStream("wwwroot/Currencies.json", FileMode.OpenOrCreate))
+            {
+                int i = 0;
+                Currencies[] newcCurrencies = (Currencies[])jsonFormatter.ReadObject(fs);
+                //ViewBag.test = Json(newcCurrencies);
+
+                double[] currRate = new double[newcCurrencies.Length]; //Работает
+                string[] currCode = new string[newcCurrencies.Length];
+                foreach (Currencies VARIABLE in newcCurrencies)
+                {
+                    currRate[i] = VARIABLE.CurrencyRate;
+                    currCode[i] = VARIABLE.CurrencyCode;
+                    i++;
+                }
+                ViewBag.currR = currRate;
+                ViewBag.currC = currCode;
+            }
             ViewBag.Features = phone.Features;
             ViewBag.Url = "https://" + phone.Url;
-            return View();
+            return View(phone);
         }
 
         [HttpGet]

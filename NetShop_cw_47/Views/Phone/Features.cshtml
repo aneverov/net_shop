@@ -5,6 +5,26 @@
 }
 
 <h2>Features</h2>
+
+@{
+    if (Model.Company == "Apple")
+    {
+        @Html.Partial("_Apple")
+    }
+    else
+    {
+        <ul>
+            <li>@Model.id</li>
+            <li>@Model.Company</li>
+            <li>@Model.Name</li>
+
+            <li>@Model.Price</li>
+            <li>@Model.QuantityOrders</li>
+
+        </ul>
+       
+    }
+}
 <p>
     @ViewBag.Features
 </p>

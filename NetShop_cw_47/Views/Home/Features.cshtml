@@ -1,7 +1,7 @@
 ﻿@model NetShop_cw_47.Models.Phone
 @functions {
-    public string url { get; set; }
-    }
+public string url { get; set; }
+}
 
 @{
     ViewData["Title"] = "Характеристики";
@@ -11,5 +11,26 @@
 <p>
     @ViewBag.Features
 </p>
-@*<a href="@ViewBag.Url">Перейти на сайт производителя</a>*@
+@*Код рабочий*@
+<table class="table-condensed">
+    <tr>
+        <td>Стоимость телефона</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>@{
+            double[] a = ViewBag.currR;
+            string[] b = ViewBag.currC;
+            int i = 0;
+            <td>@(Model.Price + " USD") </td>
+            foreach (double VARIABLE in a)
+            {
+                <td>@(VARIABLE * Model.Price + " " + b[i])</td>
+                i++;
+            }
+        }
+    </tr>
+</table>
+
 @Html.ActionLink("Сайт производителя", "Manufacturer", new { url = ViewBag.Url })

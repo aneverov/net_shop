@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,25 @@ namespace NetShop_cw_47
                     logger.LogError(ex, "Error while initializing model data");
                 }
             }
+
+            Currencies[] currencies = new Currencies[] 
+            {
+                new Currencies (){CurrencyCode = "RUB", CurrencyName = "Рубль", CurrencyRate = 57},
+                new Currencies (){CurrencyCode = "KGS", CurrencyName = "Сом", CurrencyRate = 68},
+                new Currencies (){CurrencyCode = "EUR", CurrencyName = "Евро", CurrencyRate = 0.83}
+            };
+            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(Currencies[]));
+
+            using (FileStream fs = new FileStream("wwwroot/Currencies.json", FileMode.OpenOrCreate))
+            {
+                jsonFormatter.WriteObject(fs, currencies);
+            }
+            //using (FileStream fs = new FileStream("wwwroot/Currencies.json", FileMode.OpenOrCreate))
+            //{
+            //    Currencies[] newcurr = (Currencies[])jsonFormatter.ReadObject(fs);
+
+                
+            //}
 
             webHost.Run();
         }
